@@ -1,0 +1,32 @@
+//0.4
+//code for the web sequence diagram at https://www.websequencediagrams.com/
+//creating a new note
+
+
+title new note creation
+note over browser:
+user types new note and presses save button
+end note
+
+browser->server: HTTP POST https://studies.cs.helsinki.fi/exampleapp/new_note
+server-->browser: Status code 302 requesting a new HTTP GET
+browser->server: HTTP GET https://studies.cs.helsinki.fi/exampleapp/notes
+server-->browser: HTML-code
+browser->server: HTTP GET https://studies.cs.helsinki.fi/exampleapp/main.css
+server-->browser: main.css
+browser->server: HTTP GET https://studies.cs.helsinki.fi/exampleapp/main.js
+server-->browser: main.js
+
+note over browser:
+browser executes js-code
+that requests JSON data from server 
+end note
+
+browser->server: HTTP GET https://studies.cs.helsinki.fi/exampleapp/data.json
+
+server-->browser: [{"content": "nASTER","date": "2023-07-12T01:53:48.372Z"},{...]
+
+note over browser:
+browser executes the event handler
+that renders notes to display
+end note

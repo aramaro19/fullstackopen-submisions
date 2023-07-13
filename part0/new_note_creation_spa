@@ -1,0 +1,18 @@
+//0.6
+//code for the web sequence diagram at https://www.websequencediagrams.com/
+//creating a new note in a single page application
+
+
+title new note creation (spa)
+note over browser:
+user types new note and presses save button
+end note
+
+browser->server: HTTP POST https://studies.cs.helsinki.fi/exampleapp/new_note_spa
+
+server-->browser: {"message":"note created"}
+note over browser:
+browser executes the event handler
+that renders notes to display
+end note
+
