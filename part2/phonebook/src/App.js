@@ -1,27 +1,28 @@
 import React, { useState } from 'react'
+import PersonForm from './components/PersonForm'
+import Persons from "./components/Persons"
+import Filter from './components/Filter'
 
 const App = () => {
-  const [ persons, setPersons ] = useState([ { name: 'Arto Hellas', number:'00-123456' ,id: 0 } ]) 
+  const [ persons, setPersons ] = useState([
+    { name: 'Arto Hellas', number: '040-123456', id: 0 },
+    { name: 'Ada Lovelace', number: '39-44-5323523', id: 1},
+    { name: 'Dan Abramov', number: '12-43-234345', id:2 },
+    { name: 'Mary Poppendieck', number: '39-23-6423122', id:3 }
+  ]) 
+
   const [ newName, setNewName ] = useState('')
   const [newNumber, setNewNumber] = useState('')
+  const [filter, setFilter] = useState('')
 
-  const handleNameChange = (event) => {
-    setNewName(event.target.value)
-    console.log(newName)
-  }
 
-  const handleNumberChange = (event) => {
-    setNewNumber(event.target.value)
-    console.log(newNumber)
-    
-  }
 
   const addPerson = (event) => {
-    console.log(event)
     event.preventDefault()
-
     if(persons.some((e)=> e.name === newName)) {
       alert(`${newName} is already added to phonebook`)
+      setNewName('')
+      setNewNumber('')
     }
     else {
     const personObject = {
@@ -35,31 +36,42 @@ const App = () => {
     }
   }
 
+  const handleNameChange = (event) => {
+    setNewName(event.target.value)
+    console.log(newName)
+  }
+
+  const handleNumberChange = (event) => {
+    setNewNumber(event.target.value)
+    console.log(newNumber)
+  } 
+
+  const handleFilter = (event) => {
+    setFilter(event.target.value)
+    console.log(filter) 
+  }
+
+  const personToShow = filter.length === 0 ? persons : persons.filter(person=>person.name.toLowerCase().includes(filter.toLowerCase()))
+ 
 
   return (
     <div>
       <h2>Phonebook</h2>
-      <form onSubmit={addPerson}>
-        <div>
-          name: <input 
-          value={newName} 
-          onChange={handleNameChange}/>
-        </div>
-        <div>
-          number: <input 
-          value={newNumber}
-          onChange={handleNumberChange}/>
-        </div>
-        <div>
-          <button type="submit">add</button>
-        </div>
-      </form>
-      <h2>Numbers</h2>
-      {persons.map(person => <Person key={person.id} person={person}/>)}
+      <Filter filter={filter} handleFilter={handleFilter}/>
+      <h2>add a new</h2>
+      <PersonForm 
+      submit={addPerson}
+      newName={newName}
+      newNumber={newNumber}
+      changeName={handleNameChange}
+      changeNumber={handleNumberChange}/>
+      <h2>Numbers</h2> 
+      <Persons key={persons.id} persons={personToShow}/>
     </div>
   )
 }
 
-const Person = ({person}) => <div>{person.name} {person.number}</div>
+
+
 
 export default App
