@@ -17,6 +17,7 @@ const App = () => {
         console.log(response.data)
         setPersons(response.data) 
       })
+      .catch(e=> alert(`server not running`, e))
   }
 
   useEffect(hook, [])
@@ -35,7 +36,12 @@ const App = () => {
       number: newNumber,      
       id: persons.length + 1,
     }
-    setPersons(persons.concat(personObject))
+    axios
+    .post('http://localhost:3001/persons', personObject)
+    .then(response =>{ 
+      console.log(response.data) 
+      setPersons(persons.concat(response.data))
+    })
     setNewName('')
     setNewNumber('')
     }
