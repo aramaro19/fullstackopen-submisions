@@ -2,7 +2,7 @@ import React, { useState, useEffect } from 'react'
 import PersonForm from './components/PersonForm'
 import Persons from "./components/Persons"
 import Filter from './components/Filter'
-import axios from 'axios'
+import personService from './services/person'
 
 const App = () => {
   const [ persons, setPersons ] = useState([]) 
@@ -11,12 +11,9 @@ const App = () => {
   const [filter, setFilter] = useState('')
 
   const hook = () => {
-    axios
-      .get('http://localhost:3001/persons')
-      .then(response => {
-        console.log(response.data)
-        setPersons(response.data) 
-      })
+    personService
+      .getAll()
+      .then(initialPersons => setPersons(initialPersons))
       .catch(e=> alert(`server not running`, e))
   }
 
@@ -36,12 +33,9 @@ const App = () => {
       number: newNumber,      
       id: persons.length + 1,
     }
-    axios
-    .post('http://localhost:3001/persons', personObject)
-    .then(response =>{ 
-      console.log(response.data) 
-      setPersons(persons.concat(response.data))
-    })
+    personService
+      .add(personObject)
+      .then(response => setPersons(persons.concat(response)))
     setNewName('')
     setNewNumber('')
     }
