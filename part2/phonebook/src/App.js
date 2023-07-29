@@ -3,12 +3,14 @@ import PersonForm from './components/PersonForm'
 import Persons from "./components/Persons"
 import Filter from './components/Filter'
 import personService from './services/person'
+import Notification from './components/Notification'
 
 const App = () => {
   const [ persons, setPersons ] = useState([]) 
   const [ newName, setNewName ] = useState('')
   const [newNumber, setNewNumber] = useState('')
   const [filter, setFilter] = useState('')
+  const [errorMessage, setErrorMessage] = useState(null)
 
   const hook = () => {
     personService
@@ -30,6 +32,8 @@ const App = () => {
         console.log(personObject)
         personService
           .update(personObject)
+        setErrorMessage(`User ${newName} updated`)
+        setTimeout(()=>setErrorMessage(null), 4000)
         setNewName('')
         setNewNumber('')
       }
@@ -42,6 +46,8 @@ const App = () => {
     personService
       .add(personObject)
       .then(response => setPersons(persons.concat(response)))
+      setErrorMessage(`User ${personObject.name} added`)
+        setTimeout(()=>setErrorMessage(null), 4000)
     setNewName('')
     setNewNumber('')
     }
@@ -76,6 +82,7 @@ const App = () => {
   return (
     <div>
       <h2>Phonebook</h2>
+      <Notification message={errorMessage}/>
       <Filter 
         filter={filter}
         handleFilter={handleFilter}/>

@@ -14,12 +14,12 @@ const add = (personObject) => {
 
 const deletePerson = (id) => {
     const request = axios.delete(`${baseUrl}/${id}`)
-    return request.then(()=> alert('user deleted'))
+    return request.then(()=> {})
 }
 
 const update = (personObject) => {
     const request = axios.put(`${baseUrl}/${personObject.id}`, personObject )
-    return request.then(()=> alert(`user ${personObject.name} modified`))
+    return request.then(()=> {})
 }
 
 const personService = {getAll, add, deletePerson, update}
