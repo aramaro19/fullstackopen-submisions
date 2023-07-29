@@ -30,8 +30,7 @@ const App = () => {
     else {
     const personObject = {
       name: newName,
-      number: newNumber,      
-      id: persons.length + 1,
+      number: newNumber,    
     }
     personService
       .add(personObject)
@@ -41,20 +40,32 @@ const App = () => {
     }
   }
 
+  const handleDeleteOf = (id) => {
+    if(window.confirm('Confirm delete?')) {
+    personService
+    .deletePerson(id)
+    .then(() => {
+      setPersons(persons.filter(person=> person.id !== id))})
+    .catch(e=> alert(e))}
+  }
+
   const handleNameChange = (event) => {
     setNewName(event.target.value)
-    console.log(newName)
+    console.log('new name',newName)
   }
 
   const handleNumberChange = (event) => {
     setNewNumber(event.target.value)
-    console.log(newNumber)
+    console.log('new number',newNumber)
   } 
 
   const handleFilter = (event) => {
     setFilter(event.target.value)
-    console.log(filter) 
+    console.log('filter:',filter) 
   }
+
+  //const clog = (id)=>console.log(`button ${id} clicked`)
+
 
   const personToShow = filter.length === 0 ? persons : persons.filter(person=>person.name.toLowerCase().includes(filter.toLowerCase()))
  
@@ -62,16 +73,21 @@ const App = () => {
   return (
     <div>
       <h2>Phonebook</h2>
-      <Filter filter={filter} handleFilter={handleFilter}/>
+      <Filter 
+        filter={filter}
+        handleFilter={handleFilter}/>
       <h2>add a new</h2>
       <PersonForm 
-      submit={addPerson}
-      newName={newName}
-      newNumber={newNumber}
-      changeName={handleNameChange}
-      changeNumber={handleNumberChange}/>
+        submit={addPerson}
+        newName={newName}
+        newNumber={newNumber}
+        changeName={handleNameChange}
+        changeNumber={handleNumberChange}/>
       <h2>Numbers</h2> 
-      <Persons key={persons.id} persons={personToShow}/>
+      <Persons 
+        key={persons.id} 
+        persons={personToShow}
+        handleDelete= {handleDeleteOf}/>
     </div>
   )
 }

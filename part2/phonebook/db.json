@@ -1,26 +1,6 @@
 {
   "persons": [
     {
-      "name": "Arto Hellas",
-      "number": "040-123456",
-      "id": 1
-    },
-    {
-      "name": "Ada Lovelace",
-      "number": "39-44-5323523",
-      "id": 2
-    },
-    {
-      "name": "Dan Abramov",
-      "number": "12-43-234345",
-      "id": 3
-    },
-    {
-      "name": "Mary Poppendieck",
-      "number": "39-23-6423122",
-      "id": 4
-    },
-    {
       "name": "Alex ",
       "number": "53048982",
       "id": 5
@@ -36,16 +16,6 @@
       "id": 7
     },
     {
-      "name": "test",
-      "number": "23424",
-      "id": 8
-    },
-    {
-      "name": "another",
-      "number": "234",
-      "id": 9
-    },
-    {
       "name": "this",
       "number": "5682",
       "id": 10
@@ -56,9 +26,24 @@
       "id": 11
     },
     {
-      "name": "kinkaku",
-      "number": "5946564",
+      "name": "yani",
+      "number": "",
       "id": 12
+    },
+    {
+      "name": "Arto",
+      "number": "23424",
+      "id": 13
+    },
+    {
+      "name": "Juan",
+      "number": "23255",
+      "id": 14
+    },
+    {
+      "name": "Maren",
+      "number": "45235263",
+      "id": 15
     }
   ]
 }
