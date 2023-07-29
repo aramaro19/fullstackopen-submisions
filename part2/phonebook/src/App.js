@@ -10,7 +10,8 @@ const App = () => {
   const [ newName, setNewName ] = useState('')
   const [newNumber, setNewNumber] = useState('')
   const [filter, setFilter] = useState('')
-  const [errorMessage, setErrorMessage] = useState(null)
+  const [message, setMessage] = useState(null)
+  const [error, setError] = useState(false)
 
   const hook = () => {
     personService
@@ -24,33 +25,37 @@ const App = () => {
 
   const addPerson = (event) => {
     event.preventDefault()
-    if(persons.some((e)=> e.name === newName)) {
-      if(window.confirm(`${newName} is already added to phonebook, replace the old number with a new one?`)) {
-        console.log('do update service')
-        const personObject = persons.find(e => e.name === newName)
-        personObject.number = newNumber
-        console.log(personObject)
-        personService
-          .update(personObject)
-        setErrorMessage(`User ${newName} updated`)
-        setTimeout(()=>setErrorMessage(null), 4000)
-        setNewName('')
-        setNewNumber('')
-      }
-    }
-    else {
     const personObject = {
       name: newName,
       number: newNumber,    
     }
+    if(persons.some((person)=> person.name === newName)) {
+      if(window.confirm(`${newName} is already added to phonebook, replace the old number with a new one?`)) {
+        personService
+          .update(personObject)
+          .then(setMessage(`User ${newName} updated`))
+          .catch(e=> {
+            console.log(e)
+            setError(true)
+            setMessage(`Information of ${personObject.name} has already been deleted from server`)
+            setPersons(persons.filter(person=> person.name !== personObject.name))
+          })
+      }
+    }
+    else {
     personService
       .add(personObject)
-      .then(response => setPersons(persons.concat(response)))
-      setErrorMessage(`User ${personObject.name} added`)
-        setTimeout(()=>setErrorMessage(null), 4000)
+      .then(response => {
+        setPersons(persons.concat(response))
+        setMessage(`User ${personObject.name} added`)
+      })
+    }
+    setTimeout(()=>{
+      setMessage(null)
+      setError(false)
+    }, 4000)
     setNewName('')
     setNewNumber('')
-    }
   }
 
   const handleDeleteOf = (id) => {
@@ -58,8 +63,18 @@ const App = () => {
     personService
     .deletePerson(id)
     .then(() => {
-      setPersons(persons.filter(person=> person.id !== id))})
-    .catch(e=> alert(e))}
+      setMessage('User deleted')
+    })
+    .catch(()=> {
+      setError(true)
+      setMessage('User does not exist')  
+    })
+    setPersons(persons.filter(person=> person.id !== id))
+    setTimeout(() => {
+      setMessage(null)
+      setError(false)
+    }, 4000)
+  }
   }
 
   const handleNameChange = (event) => {
@@ -82,7 +97,7 @@ const App = () => {
   return (
     <div>
       <h2>Phonebook</h2>
-      <Notification message={errorMessage}/>
+      <Notification message={message} error={error}/>
       <Filter 
         filter={filter}
         handleFilter={handleFilter}/>

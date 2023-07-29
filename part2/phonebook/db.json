@@ -2,33 +2,18 @@
   "persons": [
     {
       "name": "Arto",
-      "number": "23424",
-      "id": 13
-    },
-    {
-      "name": "Maren",
-      "number": "45235263",
-      "id": 15
-    },
-    {
-      "name": "Juanito",
-      "number": "5590901",
-      "id": 17
+      "number": "123123",
+      "id": 1
     },
     {
       "name": "Alex",
-      "number": "235",
-      "id": 18
+      "number": "109-1123",
+      "id": 2
     },
     {
       "name": "Karin",
-      "number": "587797",
-      "id": 19
-    },
-    {
-      "name": "Yan",
-      "number": "1234124",
-      "id": 20
+      "number": "1-003-1323",
+      "id": 3
     }
   ]
 }
