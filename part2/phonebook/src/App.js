@@ -23,9 +23,16 @@ const App = () => {
   const addPerson = (event) => {
     event.preventDefault()
     if(persons.some((e)=> e.name === newName)) {
-      alert(`${newName} is already added to phonebook`)
-      setNewName('')
-      setNewNumber('')
+      if(window.confirm(`${newName} is already added to phonebook, replace the old number with a new one?`)) {
+        console.log('do update service')
+        const personObject = persons.find(e => e.name === newName)
+        personObject.number = newNumber
+        console.log(personObject)
+        personService
+          .update(personObject)
+        setNewName('')
+        setNewNumber('')
+      }
     }
     else {
     const personObject = {
@@ -51,20 +58,16 @@ const App = () => {
 
   const handleNameChange = (event) => {
     setNewName(event.target.value)
-    console.log('new name',newName)
   }
 
   const handleNumberChange = (event) => {
     setNewNumber(event.target.value)
-    console.log('new number',newNumber)
   } 
 
   const handleFilter = (event) => {
     setFilter(event.target.value)
-    console.log('filter:',filter) 
   }
 
-  //const clog = (id)=>console.log(`button ${id} clicked`)
 
 
   const personToShow = filter.length === 0 ? persons : persons.filter(person=>person.name.toLowerCase().includes(filter.toLowerCase()))

@@ -17,6 +17,11 @@ const deletePerson = (id) => {
     return request.then(()=> alert('user deleted'))
 }
 
-const personService = {getAll, add, deletePerson}
+const update = (personObject) => {
+    const request = axios.put(`${baseUrl}/${personObject.id}`, personObject )
+    return request.then(()=> alert(`user ${personObject.name} modified`))
+}
+
+const personService = {getAll, add, deletePerson, update}
 
 export default personService
