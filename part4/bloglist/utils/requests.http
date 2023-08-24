@@ -1,0 +1,54 @@
+### GET /
+GET http://localhost:3003/
+
+### GET Blogs
+GET http://localhost:3003/api/blogs
+
+### GET Users
+GET http://localhost:3003/api/users
+
+
+### POST new Blog
+POST http://localhost:3003/api/blogs
+Content-Type: application/json
+Authorization: bearer eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJ1c2VybmFtZSI6Imp1YW5jYSIsImlkIjoiNjRlNjRhYWFlYWE3MjcxMDM0ZDMyZmQxIiwiaWF0IjoxNjkyODE3Njk2fQ.Y8-kFXJGBDWVTUvZnbAHV9GSi6WvWLNhfuheNhWtNsg
+
+{
+  "title": "Send blogs with userExtractor middleware",
+  "author": "Juan Carlos",
+  "url": "my.blogs.org"
+}
+
+### POST new User
+POST http://localhost:3003/api/users
+Content-Type: application/json
+
+{
+  "username": "juanca",
+  "name": "Juan Carlos",
+  "password": "juanca.sekret"
+}
+
+### POST Login
+POST http://localhost:3003/api/login
+Content-Type: application/json
+
+{
+  "username": "juanca",
+  "password": "juanca.sekret"
+}
+
+
+### DELETE blog
+DELETE http://localhost:3003/api/blogs/64e64afdeaa7271034d32fd8
+Authorization: bearer eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJ1c2VybmFtZSI6Imp1YW5jYSIsImlkIjoiNjRlNjRhYWFlYWE3MjcxMDM0ZDMyZmQxIiwiaWF0IjoxNjkyODE3Njk2fQ.Y8-kFXJGBDWVTUvZnbAHV9GSi6WvWLNhfuheNhWtNsg
+
+
+### PUT blogs
+PUT http://localhost:3003/api/blogs/64da11a2268b91429c1d4b40
+Content-Type: application/json
+
+{
+  "likes": 14
+}
+
